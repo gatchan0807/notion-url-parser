@@ -1,11 +1,19 @@
 {
   "name": "notion-url-parser",
   "description": "Notion URL Parser for Chrome Extension.",
-  "main": "index.js",
   "repository": "git@github.com:gatchan0807/notion-url-parser.git",
   "author": "gatchan0807 <yuki.dolphin.koga@gmail.com>",
   "version": "0.0.0",
   "type": "module",
+  "files": ["dist"],
+  "main": "./dist/notion-url-parser.umd.cjs",
+  "module": "./dist/notion-url-parser.js",
+  "exports": {
+    ".": {
+      "import": "./dist/notion-url-parser.js",
+      "require": "./dist/notion-url-parser.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
