@@ -6,9 +6,16 @@ export const validate = (rawUrl: string) => {
 	}
 
     const url = new URL(rawUrl);
+	if (!validateHost(url)) {
+		return false;
+	}
+
+	return true;
+};
+
+const validateHost = (url: URL) => {
 	if (url.hostname && url.hostname.match(/notion\.so$/)) {
 		return true;
 	}
-
 	return false;
-};
+}
