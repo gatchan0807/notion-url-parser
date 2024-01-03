@@ -1,5 +1,1 @@
-const SampleFunction = () => {
-    return true
-}
-
-export default SampleFunction
+export * as validation from "./validation/validation";
