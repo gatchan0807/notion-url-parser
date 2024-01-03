@@ -1,2 +1,5 @@
-console.log('Hello World');
+const SampleFunction = () => {
+    return true
+}
 
+export default SampleFunction
