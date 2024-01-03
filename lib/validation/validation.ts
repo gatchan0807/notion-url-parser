@@ -1,3 +1,4 @@
+// TODO: validateが失敗した原因も返すようにする
 export const validate = (rawUrl: string) => {
 	try {
 		new URL(rawUrl);
