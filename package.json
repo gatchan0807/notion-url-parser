@@ -21,7 +21,7 @@
   "module": "./dist/notion-url-parser.js",
   "repository": "git@github.com:gatchan0807/notion-url-parser.git",
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "vite build && tsc",
     "dev": "vite",
     "preview": "vite preview",
     "test": "vitest"
