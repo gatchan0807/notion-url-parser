@@ -4,11 +4,15 @@ import { validate } from "./validation";
 describe("validate", () => {
 	test.each([
 		{
-			url: "https://notion.so",
+			url: "https://notion.so/1234567890abcdefghijklnmopqrstuv",
 			expected: true,
 		},
 		{
-			url: "https://workspace.notion.so",
+			url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv",
+			expected: true,
+		},
+		{
+			url: "https://workspace.notion.so/1234567890abcdefghijklnmopqrstuv",
 			expected: true,
 		},
 	])("[正常系] $url の場合 $expected になる", ({ url, expected }) => {
@@ -16,6 +20,16 @@ describe("validate", () => {
 	});
 
 	test.each([
+		{
+			caseTitle: "パスがルートのNotionのURL（サブドメイン無し）の場合",
+			url: "https://notion.so",
+			expected: false,
+		},
+		{
+			caseTitle: "パスがルートのNotionのURL（サブドメイン有り）の場合",
+			url: "https://workspace.notion.so",
+			expected: false,
+		},
 		{
 			caseTitle: "Notion以外のURL",
 			url: "https://google.com",

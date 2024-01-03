@@ -10,11 +10,22 @@ export const validate = (rawUrl: string) => {
 		return false;
 	}
 
+	if (!validatePath(url)) {
+		return false;
+	}
+
 	return true;
 };
 
 const validateHost = (url: URL) => {
 	if (url.hostname && url.hostname.match(/notion\.so$/)) {
+		return true;
+	}
+	return false;
+}
+
+const validatePath = (url: URL) => {
+	if (url.pathname !== "/") {
 		return true;
 	}
 	return false;
