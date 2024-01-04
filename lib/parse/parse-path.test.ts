@@ -66,6 +66,33 @@ describe("parsePath", () => {
 				workspaceId: "workspace",
 			},
 		},
+		{
+			url: "https://notion.so/1234567890abcdefghijklnmopqrstuv#abcdefghijklnmopqrstuv1234567890",
+			expected: {
+				raw: "https://notion.so/1234567890abcdefghijklnmopqrstuv#abcdefghijklnmopqrstuv1234567890",
+				rawPageId: "1234567890abcdefghijklnmopqrstuv",
+				pageId: "1234567890abcdefghijklnmopqrstuv",
+				workspaceId: "",
+			},
+		},
+		{
+			url: "https://notion.so/1234567890abcdefghijklnmopqrstuv#abcdefghijklnmopqrstuv1234567890?query=abcxyz",
+			expected: {
+				raw: "https://notion.so/1234567890abcdefghijklnmopqrstuv#abcdefghijklnmopqrstuv1234567890?query=abcxyz",
+				rawPageId: "1234567890abcdefghijklnmopqrstuv",
+				pageId: "1234567890abcdefghijklnmopqrstuv",
+				workspaceId: "",
+			},
+		},
+		{
+			url: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv#abcdefghijklnmopqrstuv1234567890",
+			expected: {
+				raw: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv#abcdefghijklnmopqrstuv1234567890",
+				rawPageId: "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+				pageId: "1234567890abcdefghijklnmopqrstuv",
+				workspaceId: "",
+			},
+		},
 	])("[正常系] $url の場合パース成功する", ({ url, expected }) => {
 		expect(parsePath(url)).toStrictEqual(expected);
 	});

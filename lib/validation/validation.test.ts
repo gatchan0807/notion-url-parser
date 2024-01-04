@@ -15,6 +15,18 @@ describe("validate", () => {
 			url: "https://workspace.notion.so/1234567890abcdefghijklnmopqrstuv",
 			expected: true,
 		},
+		{
+			url: "https://notion.so/1234567890abcdefghijklnmopqrstuv#abcdefghijklnmopqrstuv1234567890",
+			expected: true,
+		},
+		{
+			url: "https://notion.so/1234567890abcdefghijklnmopqrstuv?query=abcxyz",
+			expected: true,
+		},
+		{
+			url: "https://notion.so/1234567890abcdefghijklnmopqrstuv#abcdefghijklnmopqrstuv1234567890?query=abcxyz",
+			expected: true,
+		},
 	])("[正常系] $url の場合 $expected になる", ({ url, expected }) => {
 		expect(validate(url)).toBe(expected);
 	});
