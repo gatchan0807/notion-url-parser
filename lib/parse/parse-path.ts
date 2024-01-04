@@ -14,10 +14,12 @@ export const parsePath: parsePathFunction = (rawUrl: string) => {
 
 	const url = new URL(rawUrl);
 	const path = separatePathName(url.pathname);
+	const pageId = separatePageId(path.rawPageId);
 
 	const notionUrl: NotionUrl = {
 		raw: rawUrl,
 		rawPageId: path.rawPageId,
+		pageId: pageId ?? "",
 		workspaceId: path.workspaceId ?? "",
 	};
 
@@ -36,4 +38,18 @@ const separatePathName = (path: string) => {
 	}
 
 	return { rawPageId: pathArray[0] };
+};
+
+/**
+ * ページIDを生のページIDから分離します。
+ *
+ * @param rawPageId - 生のページID。
+ * @returns 分離されたページID。
+ */
+const separatePageId = (rawPageId: string) => {
+	const pageId = rawPageId.match(/[a-z0-9]{32}$/);
+	if (!pageId || pageId[0] === "") {
+		return null;
+	}
+	return pageId[0];
 };

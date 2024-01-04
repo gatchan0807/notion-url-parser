@@ -8,6 +8,7 @@ describe("parsePath", () => {
 			expected: {
 				raw: "https://notion.so/1234567890abcdefghijklnmopqrstuv",
 				rawPageId: "1234567890abcdefghijklnmopqrstuv",
+                pageId: "1234567890abcdefghijklnmopqrstuv",
 				workspaceId: "",
 			},
 		},
@@ -16,6 +17,7 @@ describe("parsePath", () => {
 			expected: {
 				raw: "https://notion.so/1234567890abcdefghijklnmopqrstuv?query=abcxyz",
 				rawPageId: "1234567890abcdefghijklnmopqrstuv",
+                pageId: "1234567890abcdefghijklnmopqrstuv",
 				workspaceId: "",
 			},
 		},
@@ -24,6 +26,7 @@ describe("parsePath", () => {
 			expected: {
 				raw: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
 				rawPageId: "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+                pageId: "1234567890abcdefghijklnmopqrstuv",
 				workspaceId: "",
 			},
 		},
@@ -32,6 +35,7 @@ describe("parsePath", () => {
 			expected: {
 				raw: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?query=abcxyz",
 				rawPageId: "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+                pageId: "1234567890abcdefghijklnmopqrstuv",
 				workspaceId: "",
 			},
 		},
@@ -40,6 +44,7 @@ describe("parsePath", () => {
             expected: {
                 raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv",
                 rawPageId: "1234567890abcdefghijklnmopqrstuv",
+                pageId: "1234567890abcdefghijklnmopqrstuv",
                 workspaceId: "workspace",
             },
         },
@@ -48,6 +53,7 @@ describe("parsePath", () => {
             expected: {
                 raw: "https://notion.so/workspace/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
                 rawPageId: "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+                pageId: "1234567890abcdefghijklnmopqrstuv",
                 workspaceId: "workspace",
             },
         },
@@ -56,6 +62,7 @@ describe("parsePath", () => {
             expected: {
                 raw: "https://notion.so/workspace/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?query=abcxyz",
                 rawPageId: "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+                pageId: "1234567890abcdefghijklnmopqrstuv",
                 workspaceId: "workspace",
             },
         },
