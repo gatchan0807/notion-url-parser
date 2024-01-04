@@ -1,10 +1,12 @@
+import { validate as validateFunction } from "../notion-url/types";
+
 /**
  * URLを検証します。
- * 
+ *
  * @param rawUrl - 検証する対象のURL
  * @returns URLが Notion URL Parser のURLとして有効な場合はtrue、それ以外の場合はfalseを返します。
  */
-export const validate = (rawUrl: string) => {
+export const validate: validateFunction = (rawUrl: string) => {
 	// TODO: validateが失敗した原因も返すようにする
 	try {
 		new URL(rawUrl);
@@ -12,7 +14,7 @@ export const validate = (rawUrl: string) => {
 		return false;
 	}
 
-    const url = new URL(rawUrl);
+	const url = new URL(rawUrl);
 	if (!validateHost(url)) {
 		return false;
 	}
@@ -26,7 +28,7 @@ export const validate = (rawUrl: string) => {
 
 /**
  * 指定されたURLのホストがNotionのものかを検証します。
- * 
+ *
  * @param url - 検証する対象のURL
  * @returns ホストがパターン "notion.so" に一致する場合はtrue、それ以外の場合はfalseを返します。
  */
@@ -35,11 +37,11 @@ const validateHost = (url: URL) => {
 		return true;
 	}
 	return false;
-}
+};
 
 /**
  * URLのパスにページIDに関するデータが入っている状態かを検証します。
- * 
+ *
  * @param url - 検証する対象のURL
  * @returns パス部分が空ではない場合はtrue、空の場合はfalseを返します。
  */
@@ -48,4 +50,4 @@ const validatePath = (url: URL) => {
 		return true;
 	}
 	return false;
-}
+};
