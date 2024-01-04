@@ -12,9 +12,25 @@ describe("parsePath", () => {
 			},
 		},
 		{
+			url: "https://notion.so/1234567890abcdefghijklnmopqrstuv?query=abcxyz",
+			expected: {
+				raw: "https://notion.so/1234567890abcdefghijklnmopqrstuv?query=abcxyz",
+				rawPageId: "1234567890abcdefghijklnmopqrstuv",
+				workspaceId: "",
+			},
+		},
+		{
 			url: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
 			expected: {
 				raw: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+				rawPageId: "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+				workspaceId: "",
+			},
+		},
+		{
+			url: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?query=abcxyz",
+			expected: {
+				raw: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?query=abcxyz",
 				rawPageId: "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
 				workspaceId: "",
 			},
@@ -31,6 +47,14 @@ describe("parsePath", () => {
             url: "https://notion.so/workspace/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
             expected: {
                 raw: "https://notion.so/workspace/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+                rawPageId: "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+                workspaceId: "workspace",
+            },
+        },
+        {
+            url: "https://notion.so/workspace/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?query=abcxyz",
+            expected: {
+                raw: "https://notion.so/workspace/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?query=abcxyz",
                 rawPageId: "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
                 workspaceId: "workspace",
             },
