@@ -1,6 +1,7 @@
 export type NotionUrl = {
 	raw: string;
 	rawPageId: string;
+    pageId: string;
 	workspaceId?: string;
 };
 
