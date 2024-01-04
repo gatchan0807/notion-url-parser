@@ -17,8 +17,8 @@ export const parsePath: parsePathFunction = (rawUrl: string) => {
 
 	const notionUrl: NotionUrl = {
 		raw: rawUrl,
-		rawPageId: path.pageId,
-		workspaceId: path.workspace ?? "",
+		rawPageId: path.rawPageId,
+		workspaceId: path.workspaceId ?? "",
 	};
 
 	return notionUrl;
@@ -32,8 +32,8 @@ export const parsePath: parsePathFunction = (rawUrl: string) => {
 const separatePathName = (path: string) => {
 	const pathArray = path.split("/").filter((item) => item !== "");
 	if (pathArray.length >= 2) {
-		return { workspace: pathArray[0], pageId: pathArray[1] };
+		return { workspaceId: pathArray[0], rawPageId: pathArray[1] };
 	}
 
-	return { pageId: pathArray[0] };
+	return { rawPageId: pathArray[0] };
 };
