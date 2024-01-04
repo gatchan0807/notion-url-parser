@@ -99,4 +99,39 @@ describe("parsePath", () => {
     ])("[異常系] $caseTitle( $url )の場合パース失敗する", ({ url, expectedException }) => {
         expect(() => parsePath(url)).toThrowError(expectedException);
     });
+
+    test.each([
+        {
+            caseTitle: "Notion URL (ID部分) が正しくない形の場合、Page IDが空文字列になる",
+            url: "https://notion.so/1234567890abc",
+            expected: {
+                raw: "https://notion.so/1234567890abc",
+                rawPageId: "1234567890abc",
+                pageId: "",
+                workspaceId: "",
+            },
+        },
+        {
+            caseTitle: "Notion URL (ID部分) が正しくない形の場合、Page IDが空文字列になる",
+            url: "https://notion.so/workspace/1234567890abc",
+            expected: {
+                raw: "https://notion.so/workspace/1234567890abc",
+                rawPageId: "1234567890abc",
+                pageId: "",
+                workspaceId: "workspace",
+            },
+        },
+        {
+            caseTitle: "Notion URL (ID部分) が正しくない形の場合、Page IDが空文字列になる",
+            url: "https://notion.so/alphabet-in-page-title-1234567890abc",
+            expected: {
+                raw: "https://notion.so/alphabet-in-page-title-1234567890abc",
+                rawPageId: "alphabet-in-page-title-1234567890abc",
+                pageId: "",
+                workspaceId: "",
+            },
+        },
+    ])("[異常系] $caseTitle( $url )", ({ url, expected }) => {
+        expect(parsePath(url)).toStrictEqual(expected);
+    });
 });
