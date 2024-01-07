@@ -3,7 +3,7 @@ import { validate } from "../validation/validation";
 
 /**
  * 指定された生のURLを解析し、必要なパラメータを抽出します。
- * 
+ *
  * @param rawUrl - 解析するURL。
  * @returns 解析されたNotionUrlオブジェクト。
  * @throws URLが無効な場合はエラーが throw されます。
@@ -31,7 +31,6 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
     };
 };
 
-
 /**
  * URLSearchParamsオブジェクトからパラメータを分離します。
  * @param param - パラメータを含むURLSearchParamsオブジェクトです。
@@ -40,7 +39,6 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
 const separateParam = (param: URLSearchParams) => {
     return { viewId: param.get("v") };
 };
-
 
 // TODO: この関数はparsePath.tsと重複しているので、共通化する
 const separatePathName = (path: string) => {
