@@ -11,3 +11,21 @@ export const separatePageId = (rawPageId: string) => {
     return pageId[0];
 };
 
+/**
+ * ページIDを生のページIDから分離します。
+ *
+ * @param rawPageId - 生のページID。
+ * @returns 分離されたページID。
+ */
+export const separatePathName = (path: string) => {
+    const pathArray = path.split("/").filter((item) => item !== "");
+    if (pathArray.length === 0) {
+        return { rawPageId: "" };
+    }
+
+    if (pathArray.length === 2) {
+        return { rawWorkspaceId: pathArray[0], rawPageId: pathArray[1] };
+    }
+
+    return { rawPageId: pathArray[0] ?? "" };
+};
