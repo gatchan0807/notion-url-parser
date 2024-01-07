@@ -24,6 +24,7 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
             rawDatabasePageId,
             databasePageId: separatePageId(rawDatabasePageId) ?? "",
             viewId: params.viewId ?? "",
+            isDatabasePage: true,
         };
     }
 
