@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { validate } from "./validation";
+import { validate } from "../validation";
 
 describe("validate", () => {
 	test.each([

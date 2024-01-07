@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { separatePageId, separatePathName } from "./domain";
+import { separatePageId, separatePathName } from "../domain";
 
 describe("separatePageId", () => {
     test.each([
