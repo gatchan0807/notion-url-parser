@@ -17,7 +17,7 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
     const url = new URL(rawUrl);
     const params = separateParam(url.searchParams);
 
-    if (params.viewId !== null) {
+    if (params.viewId !== null && params.viewId !== "") {
         const rawDatabasePageId = separatePathName(url.pathname).rawPageId;
         return {
             raw: rawUrl,
