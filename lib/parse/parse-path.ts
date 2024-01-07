@@ -1,4 +1,4 @@
-import { NotionUrl, parsePath as parsePathFunction } from "../notion-url/types";
+import { parsePath as parsePathFunction } from "../notion-url/types";
 import { validate } from "../validation/validation";
 
 /**
@@ -16,14 +16,12 @@ export const parsePath: parsePathFunction = (rawUrl: string) => {
 	const path = separatePathName(url.pathname);
 	const pageId = separatePageId(path.rawPageId);
 
-	const notionUrl: NotionUrl = {
+	return {
 		raw: rawUrl,
 		rawPageId: path.rawPageId,
 		pageId: pageId ?? "",
 		workspaceId: path.workspaceId ?? "",
 	};
-
-	return notionUrl;
 };
 
 /**
