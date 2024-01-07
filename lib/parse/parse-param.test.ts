@@ -22,6 +22,7 @@ describe("parseParam", () => {
                 rawDatabasePageId: "1234567890abcdefghijklnmopqrstuv",
                 databasePageId: "1234567890abcdefghijklnmopqrstuv",
                 viewId: "abcdefghijklnmopqrstuv1234567890",
+                isDatabasePage: true,
             },
         },
         {
@@ -32,6 +33,7 @@ describe("parseParam", () => {
                     "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
                 databasePageId: "1234567890abcdefghijklnmopqrstuv",
                 viewId: "abcdefghijklnmopqrstuv1234567890",
+                isDatabasePage: true,
             },
         },
     ])("[正常系] $url の場合パース成功する", ({ url, expected }) => {
