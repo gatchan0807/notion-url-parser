@@ -261,10 +261,37 @@ describe("parseParam", () => {
                 },
             },
             {
+                caseTitle: "vパラメータ・pパラメータ・pmパラメータどの中身も含まれていない",
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v&p&pm",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v&p&pm",
+                    isDatabasePage: false,
+                    isPeeked: false,
+                },
+            },
+            {
                 caseTitle: "vパラメータ・pパラメータどちらの中身も含まれていない",
                 url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v&p",
                 expected: {
                     raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v&p",
+                    isDatabasePage: false,
+                    isPeeked: false,
+                },
+            },
+            {
+                caseTitle: "pパラメータ・pmパラメータどの中身も含まれていない",
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p&pm",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p&pm",
+                    isDatabasePage: false,
+                    isPeeked: false,
+                },
+            },
+            {
+                caseTitle: "pmパラメータのみ",
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?pm=s",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?pm=s",
                     isDatabasePage: false,
                     isPeeked: false,
                 },
