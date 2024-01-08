@@ -12,6 +12,7 @@ describe("parseParam", () => {
                     basePageId: "1234567890abcdefghijklnmopqrstuv",
                     viewId: "abcdefghijklnmopqrstuv1234567890",
                     isDatabasePage: true,
+                    isPeeked: false,
                 },
             },
             {
@@ -23,6 +24,7 @@ describe("parseParam", () => {
                     basePageId: "1234567890abcdefghijklnmopqrstuv",
                     viewId: "abcdefghijklnmopqrstuv1234567890",
                     isDatabasePage: true,
+                    isPeeked: false,
                 },
             },
         ])("$url の場合、パース成功する", ({ url, expected }) => {
@@ -78,6 +80,7 @@ describe("parseParam", () => {
                 expected: {
                     raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv",
                     isDatabasePage: false,
+                    isPeeked: false,
                 },
             },
             {
@@ -86,6 +89,7 @@ describe("parseParam", () => {
                 expected: {
                     raw: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
                     isDatabasePage: false,
+                    isPeeked: false,
                 },
             },
             {
@@ -94,6 +98,7 @@ describe("parseParam", () => {
                 expected: {
                     raw: "https://notion.so/1234567890abcdefghijklnmopqrstuv?x=abcdefghijklnmopqrstuv1234567890",
                     isDatabasePage: false,
+                    isPeeked: false,
                 },
             },
             {
@@ -102,6 +107,7 @@ describe("parseParam", () => {
                 expected: {
                     raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?x=abcdefghijklnmopqrstuv1234567890",
                     isDatabasePage: false,
+                    isPeeked: false,
                 },
             },
             {
@@ -110,6 +116,7 @@ describe("parseParam", () => {
                 expected: {
                     raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?x",
                     isDatabasePage: false,
+                    isPeeked: false,
                 },
             },
             {
@@ -118,6 +125,7 @@ describe("parseParam", () => {
                 expected: {
                     raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v",
                     isDatabasePage: false,
+                    isPeeked: false,
                 },
             },
         ])(

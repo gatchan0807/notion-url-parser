@@ -18,6 +18,7 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
     const params = separateParam(url.searchParams);
 
     const isDatabasePage = typeof params.viewId === "string" && params.viewId !== "";
+    const isPeeked = typeof params.peekPageId === "string" && params.peekPageId !== "";
 
     const rawBasePageId = separatePathName(url.pathname).rawPageId;
     const baseResult = {
@@ -25,12 +26,30 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
         rawBasePageId,
         basePageId: separatePageId(rawBasePageId) ?? "",
         isDatabasePage,
+        isPeeked,
     };
+
+    if (isDatabasePage && isPeeked) {
+        return {
+            ...baseResult,
+            viewId: params.viewId ?? "",
+            peekPageId: params.peekPageId ?? "",
+            peekMode: params.peekMode ?? "",
+        };
+    }
 
     if (isDatabasePage) {
         return {
             ...baseResult,
             viewId: params.viewId ?? "",
+        };
+    }
+
+    if (isPeeked) {
+        return {
+            ...baseResult,
+            peekPageId: params.peekPageId ?? "",
+            peekMode: params.peekMode ?? "",
         };
     }
 
@@ -47,5 +66,7 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
 const separateParam = (param: URLSearchParams) => {
     return {
         viewId: param.get("v"),
+        peekPageId: param.get("p"),
+        peekMode: param.get("pm"),
     };
 };
