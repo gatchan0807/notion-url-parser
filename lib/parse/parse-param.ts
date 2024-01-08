@@ -17,20 +17,26 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
     const url = new URL(rawUrl);
     const params = separateParam(url.searchParams);
 
-    if (params.viewId !== null && params.viewId !== "") {
-        const rawDatabasePageId = separatePathName(url.pathname).rawPageId;
+    const isDatabasePage = typeof params.viewId === "string" && params.viewId !== "";
+
+    const rawBasePageId = separatePathName(url.pathname).rawPageId;
+    const baseResult = {
+        raw: rawUrl,
+        rawBasePageId,
+        basePageId: separatePageId(rawBasePageId) ?? "",
+        isDatabasePage,
+    };
+
+    if (isDatabasePage) {
         return {
-            raw: rawUrl,
-            rawDatabasePageId,
-            databasePageId: separatePageId(rawDatabasePageId) ?? "",
+            ...baseResult,
             viewId: params.viewId ?? "",
-            isDatabasePage: true,
         };
     }
 
-    return {
-        raw: rawUrl,
-    };
+    // SearchParamsに有効な値がない場合は Page ID 関連のパラメーターを落として返す
+    const { rawBasePageId: _r, basePageId: _b, ...result } = baseResult;
+    return result;
 };
 
 /**
@@ -39,5 +45,7 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
  * @returns 分離されたパラメータを持つオブジェクトです。
  */
 const separateParam = (param: URLSearchParams) => {
-    return { viewId: param.get("v") };
+    return {
+        viewId: param.get("v"),
+    };
 };

@@ -2,16 +2,20 @@ export type NotionUrl = {
 	raw: string;
 	rawPageId: string;
 	pageId: string;
+	isDatabasePage: boolean;
 	workspaceId?: string;
-	rawDatabasePageId?: string;
-	databasePageId?: string;
-	isDatabasePage?: boolean;
+	rawBasePageId?: string;
+	basePageId?: string;
 	viewId?: string;
 };
 
 export type ParsedFromParam = Pick<
 	NotionUrl,
-	"raw" | "rawDatabasePageId" | "databasePageId" | "isDatabasePage" | "viewId"
+	| "raw"
+	| "isDatabasePage"
+	| "rawBasePageId"
+	| "basePageId"
+	| "viewId"
 >;
 export type ParsedFromPath = Pick<
 	NotionUrl,

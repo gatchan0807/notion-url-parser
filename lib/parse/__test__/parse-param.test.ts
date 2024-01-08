@@ -8,8 +8,8 @@ describe("parseParam", () => {
                 url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890",
                 expected: {
                     raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890",
-                    rawDatabasePageId: "1234567890abcdefghijklnmopqrstuv",
-                    databasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    rawBasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
                     viewId: "abcdefghijklnmopqrstuv1234567890",
                     isDatabasePage: true,
                 },
@@ -18,9 +18,9 @@ describe("parseParam", () => {
                 url: "https://notion.so/workspace/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890",
                 expected: {
                     raw: "https://notion.so/workspace/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890",
-                    rawDatabasePageId:
+                    rawBasePageId:
                         "alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
-                    databasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
                     viewId: "abcdefghijklnmopqrstuv1234567890",
                     isDatabasePage: true,
                 },
@@ -63,7 +63,7 @@ describe("parseParam", () => {
                 expectedException: "Invalid URL",
             },
         ])(
-            "[異常系] $caseTitle( $url )の場合、パース失敗する",
+            "$caseTitle( $url )の場合、パース失敗する",
             ({ url, expectedException }) => {
                 expect(() => parseParam(url)).toThrowError(expectedException);
             }
@@ -77,6 +77,7 @@ describe("parseParam", () => {
                 url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv",
                 expected: {
                     raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv",
+                    isDatabasePage: false,
                 },
             },
             {
@@ -84,6 +85,7 @@ describe("parseParam", () => {
                 url: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
                 expected: {
                     raw: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+                    isDatabasePage: false,
                 },
             },
             {
@@ -91,6 +93,7 @@ describe("parseParam", () => {
                 url: "https://notion.so/1234567890abcdefghijklnmopqrstuv?x=abcdefghijklnmopqrstuv1234567890",
                 expected: {
                     raw: "https://notion.so/1234567890abcdefghijklnmopqrstuv?x=abcdefghijklnmopqrstuv1234567890",
+                    isDatabasePage: false,
                 },
             },
             {
@@ -98,6 +101,7 @@ describe("parseParam", () => {
                 url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?x=abcdefghijklnmopqrstuv1234567890",
                 expected: {
                     raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?x=abcdefghijklnmopqrstuv1234567890",
+                    isDatabasePage: false,
                 },
             },
             {
@@ -105,6 +109,7 @@ describe("parseParam", () => {
                 url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?x",
                 expected: {
                     raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?x",
+                    isDatabasePage: false,
                 },
             },
             {
@@ -112,10 +117,11 @@ describe("parseParam", () => {
                 url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v",
                 expected: {
                     raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v",
+                    isDatabasePage: false,
                 },
             },
         ])(
-            "[異常系] $caseTitle ( $url )場合、そのままURLを返す形でパース成功する",
+            "$caseTitle ( $url )場合、そのままURLを返す形でパース成功する",
             ({ url, expected }) => {
                 expect(parseParam(url)).toStrictEqual(expected);
             }
