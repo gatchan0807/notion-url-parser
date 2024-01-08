@@ -17,20 +17,45 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
     const url = new URL(rawUrl);
     const params = separateParam(url.searchParams);
 
-    if (params.viewId !== null && params.viewId !== "") {
-        const rawDatabasePageId = separatePathName(url.pathname).rawPageId;
+    const isDatabasePage = typeof params.viewId === "string" && params.viewId !== "";
+    const isPeeked = typeof params.peekPageId === "string" && params.peekPageId !== "";
+
+    const rawBasePageId = separatePathName(url.pathname).rawPageId;
+    const baseResult = {
+        raw: rawUrl,
+        rawBasePageId,
+        basePageId: separatePageId(rawBasePageId) ?? "",
+        isDatabasePage,
+        isPeeked,
+    };
+
+    if (isDatabasePage && isPeeked) {
         return {
-            raw: rawUrl,
-            rawDatabasePageId,
-            databasePageId: separatePageId(rawDatabasePageId) ?? "",
+            ...baseResult,
             viewId: params.viewId ?? "",
-            isDatabasePage: true,
+            peekPageId: params.peekPageId ?? "",
+            peekMode: params.peekMode ?? "",
         };
     }
 
-    return {
-        raw: rawUrl,
-    };
+    if (isDatabasePage) {
+        return {
+            ...baseResult,
+            viewId: params.viewId ?? "",
+        };
+    }
+
+    if (isPeeked) {
+        return {
+            ...baseResult,
+            peekPageId: params.peekPageId ?? "",
+            peekMode: params.peekMode ?? "",
+        };
+    }
+
+    // SearchParamsに有効な値がない場合は Page ID 関連のパラメーターを落として返す
+    const { rawBasePageId: _r, basePageId: _b, ...result } = baseResult;
+    return result;
 };
 
 /**
@@ -39,5 +64,9 @@ export const parseParam: parseParamFunction = (rawUrl: string) => {
  * @returns 分離されたパラメータを持つオブジェクトです。
  */
 const separateParam = (param: URLSearchParams) => {
-    return { viewId: param.get("v") };
+    return {
+        viewId: param.get("v"),
+        peekPageId: param.get("p"),
+        peekMode: param.get("pm"),
+    };
 };

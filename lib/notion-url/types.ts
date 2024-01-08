@@ -2,16 +2,26 @@ export type NotionUrl = {
 	raw: string;
 	rawPageId: string;
 	pageId: string;
+	isPeeked: boolean;
+	isDatabasePage: boolean;
 	workspaceId?: string;
-	rawDatabasePageId?: string;
-	databasePageId?: string;
-	isDatabasePage?: boolean;
+	rawBasePageId?: string;
+	basePageId?: string;
 	viewId?: string;
+	peekPageId?: string;
+	peekMode?: string;
 };
 
 export type ParsedFromParam = Pick<
 	NotionUrl,
-	"raw" | "rawDatabasePageId" | "databasePageId" | "isDatabasePage" | "viewId"
+	| "raw"
+	| "isDatabasePage"
+	| "isPeeked"
+	| "rawBasePageId"
+	| "basePageId"
+	| "viewId"
+	| "peekPageId"
+	| "peekMode"
 >;
 export type ParsedFromPath = Pick<
 	NotionUrl,
