@@ -178,6 +178,11 @@ describe("parseParam", () => {
                 url: "1234567890abcdefghijklnmopqrstuv",
                 expectedException: "Invalid URL",
             },
+            {
+                caseTitle: "パラメータだけの場合",
+                url: "?v=1234567890abcdefghijklnmopqrstuv&p=1234567890abcdefghijklnmopqrstuv&pm=s",
+                expectedException: "Invalid URL",
+            },
         ])(
             "$caseTitle( $url )の場合、パース失敗する",
             ({ url, expectedException }) => {
