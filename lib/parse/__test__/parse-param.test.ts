@@ -128,6 +128,33 @@ describe("parseParam", () => {
                     isPeeked: false,
                 },
             },
+            {
+                caseTitle: "pパラメータの中身が含まれていない",
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p",
+                    isDatabasePage: false,
+                    isPeeked: false,
+                },
+            },
+            {
+                caseTitle: "pmパラメータの中身が含まれていない",
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?pm",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?pm",
+                    isDatabasePage: false,
+                    isPeeked: false,
+                },
+            },
+            {
+                caseTitle: "vパラメータ・pパラメータどちらの中身も含まれていない",
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v&p",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v&p",
+                    isDatabasePage: false,
+                    isPeeked: false,
+                },
+            },
         ])(
             "$caseTitle ( $url )場合、そのままURLを返す形でパース成功する",
             ({ url, expected }) => {
