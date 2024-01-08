@@ -27,6 +27,120 @@ describe("parseParam", () => {
                     isPeeked: false,
                 },
             },
+            {
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890&p=987654321abcdefghijklnmopqrstuv",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890&p=987654321abcdefghijklnmopqrstuv",
+                    rawBasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
+                    viewId: "abcdefghijklnmopqrstuv1234567890",
+                    peekPageId: "987654321abcdefghijklnmopqrstuv",
+                    peekMode: "",
+                    isDatabasePage: true,
+                    isPeeked: true,
+                },
+            },
+            {
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890&p=987654321abcdefghijklnmopqrstuv&pm=s",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890&p=987654321abcdefghijklnmopqrstuv&pm=s",
+                    rawBasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
+                    viewId: "abcdefghijklnmopqrstuv1234567890",
+                    peekPageId: "987654321abcdefghijklnmopqrstuv",
+                    peekMode: "s",
+                    isDatabasePage: true,
+                    isPeeked: true,
+                },
+            },
+            {
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890&p=987654321abcdefghijklnmopqrstuv&pm=c",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890&p=987654321abcdefghijklnmopqrstuv&pm=c",
+                    rawBasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
+                    viewId: "abcdefghijklnmopqrstuv1234567890",
+                    peekPageId: "987654321abcdefghijklnmopqrstuv",
+                    peekMode: "c",
+                    isDatabasePage: true,
+                    isPeeked: true,
+                },
+            },
+            {
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=987654321abcdefghijklnmopqrstuv",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=987654321abcdefghijklnmopqrstuv",
+                    rawBasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
+                    peekPageId: "987654321abcdefghijklnmopqrstuv",
+                    peekMode: "",
+                    isDatabasePage: false,
+                    isPeeked: true,
+                },
+            },
+            {
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=987654321abcdefghijklnmopqrstuv&pm=s",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=987654321abcdefghijklnmopqrstuv&pm=s",
+                    rawBasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
+                    peekPageId: "987654321abcdefghijklnmopqrstuv",
+                    peekMode: "s",
+                    isDatabasePage: false,
+                    isPeeked: true,
+                },
+            },
+            {
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=987654321abcdefghijklnmopqrstuv&pm=c",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=987654321abcdefghijklnmopqrstuv&pm=c",
+                    rawBasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
+                    peekPageId: "987654321abcdefghijklnmopqrstuv",
+                    peekMode: "c",
+                    isDatabasePage: false,
+                    isPeeked: true,
+                },
+            },
+            {
+                // 同じページをサイドページで開くこともできる
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=1234567890abcdefghijklnmopqrstuv",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=1234567890abcdefghijklnmopqrstuv",
+                    rawBasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
+                    peekPageId: "1234567890abcdefghijklnmopqrstuv",
+                    peekMode: "",
+                    isDatabasePage: false,
+                    isPeeked: true,
+                },
+            },
+            {
+                // 同じページをサイドページで開くこともできる
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=1234567890abcdefghijklnmopqrstuv&pm=s",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=1234567890abcdefghijklnmopqrstuv&pm=s",
+                    rawBasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
+                    peekPageId: "1234567890abcdefghijklnmopqrstuv",
+                    peekMode: "s",
+                    isDatabasePage: false,
+                    isPeeked: true,
+                },
+            },
+            {
+                // 同じページをポップアップで開くこともできる
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=1234567890abcdefghijklnmopqrstuv&pm=c",
+                expected: {
+                    raw: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv?p=1234567890abcdefghijklnmopqrstuv&pm=c",
+                    rawBasePageId: "1234567890abcdefghijklnmopqrstuv",
+                    basePageId: "1234567890abcdefghijklnmopqrstuv",
+                    peekPageId: "1234567890abcdefghijklnmopqrstuv",
+                    peekMode: "c",
+                    isDatabasePage: false,
+                    isPeeked: true,
+                },
+            },
         ])("$url の場合、パース成功する", ({ url, expected }) => {
             expect(parseParam(url)).toStrictEqual(expected);
         });
