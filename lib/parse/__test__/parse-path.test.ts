@@ -126,6 +126,21 @@ describe("parsePath", () => {
 				url: "1234567890abcdefghijklnmopqrstuv",
 				expectedException: "Invalid URL",
 			},
+			{
+				caseTitle: "View IDだけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?v=1234567890abcdefghijklnmopqrstuv",
+				expected: "Path is empty",
+			},
+			{
+				caseTitle: "Peeked Page IDだけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?p=1234567890abcdefghijklnmopqrstuv",
+				expected: "Path is empty",
+			},
+			{
+				caseTitle: "Peeked Mode情報だけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?pm=s",
+				expected: "Path is empty",
+			},
 		])(
 			"$caseTitle( $url )の場合パース失敗する",
 			({ url, expectedException }) => {

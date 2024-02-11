@@ -60,7 +60,22 @@ describe("validate", () => {
 				url: "1234567890abcdefghijklnmopqrstuv",
 				expected: { result: false, reason: new TypeError("Invalid URL") },
 			},
-		])("$caseTitle( $url ) の場合 $expected になる", ({ url, expected }) => {
+			{
+				caseTitle: "View IDだけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?v=1234567890abcdefghijklnmopqrstuv",
+				expected: { result: false, reason: new Error("Path is empty") },
+			},
+			{
+				caseTitle: "Peeked Page IDだけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?p=1234567890abcdefghijklnmopqrstuv",
+				expected: { result: false, reason: new Error("Path is empty") },
+			},
+			{
+				caseTitle: "Peeked Mode情報だけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?pm=s",
+				expected: { result: false, reason: new Error("Path is empty") },
+			},
+		])("$caseTitle( $url ) の場合 $expected.reason になる", ({ url, expected }) => {
 			expect(validate(url)).toStrictEqual(expected);
 		});
 	});
