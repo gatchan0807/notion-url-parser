@@ -4,26 +4,25 @@ import { validate as validateFunction } from "../notion-url/types";
  * URLを検証します。
  *
  * @param rawUrl - 検証する対象のURL
- * @returns URLが Notion URL Parser のURLとして有効な場合はtrue、それ以外の場合はfalseを返します。
+ * @returns URLが Notion URL Parser のURLとして有効な場合は result に trueが入り、それ以外の場合は result に false 、 reason にエラーが入ったオブジェクトを返します。
  */
 export const validate: validateFunction = (rawUrl: string) => {
-	// TODO: validateが失敗した原因も返すようにする
 	try {
 		new URL(rawUrl);
 	} catch (e) {
-		return false;
+		return { result: false, reason: e as Error };
 	}
 
 	const url = new URL(rawUrl);
 	if (!validateHost(url)) {
-		return false;
+		return { result: false, reason: new Error("Host is not notion.so") };
 	}
 
 	if (!validatePath(url)) {
-		return false;
+		return { result: false, reason: new Error("Path is empty") };
 	}
 
-	return true;
+	return { result: true, reason: null };
 };
 
 /**

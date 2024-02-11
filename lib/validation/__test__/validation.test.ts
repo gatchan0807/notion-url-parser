@@ -6,30 +6,30 @@ describe("validate", () => {
 		test.each([
 			{
 				url: "https://notion.so/1234567890abcdefghijklnmopqrstuv",
-				expected: true,
+				expected: { result: true, reason: null },
 			},
 			{
 				url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv",
-				expected: true,
+				expected: { result: true, reason: null },
 			},
 			{
 				url: "https://workspace.notion.so/1234567890abcdefghijklnmopqrstuv",
-				expected: true,
+				expected: { result: true, reason: null },
 			},
 			{
 				url: "https://notion.so/1234567890abcdefghijklnmopqrstuv#abcdefghijklnmopqrstuv1234567890",
-				expected: true,
+				expected: { result: true, reason: null },
 			},
 			{
 				url: "https://notion.so/1234567890abcdefghijklnmopqrstuv?query=abcxyz",
-				expected: true,
+				expected: { result: true, reason: null },
 			},
 			{
 				url: "https://notion.so/1234567890abcdefghijklnmopqrstuv#abcdefghijklnmopqrstuv1234567890?query=abcxyz",
-				expected: true,
+				expected: { result: true, reason: null },
 			},
 		])("$url の場合 $expected になる", ({ url, expected }) => {
-			expect(validate(url)).toBe(expected);
+			expect(validate(url)).toStrictEqual(expected);
 		});
 	});
 
@@ -38,33 +38,45 @@ describe("validate", () => {
 			{
 				caseTitle: "パスがルートのNotionのURL（サブドメイン無し）",
 				url: "https://notion.so",
-				expected: false,
+				expected: { result: false, reason: new Error("Path is empty") },
 			},
 			{
 				caseTitle: "パスがルートのNotionのURL（サブドメイン有り）",
 				url: "https://workspace.notion.so",
-				expected: false,
+				expected: { result: false, reason: new Error("Path is empty") },
 			},
 			{
 				caseTitle: "Notion以外のURL",
 				url: "https://google.com",
-				expected: false,
+				expected: { result: false, reason: new Error("Host is not notion.so") },
 			},
 			{
 				caseTitle: "URLとして成立しない文字列",
 				url: "https://",
-				expected: false,
+				expected: { result: false, reason: new TypeError("Invalid URL") },
 			},
 			{
 				caseTitle: "Notion Page IDだけ",
 				url: "1234567890abcdefghijklnmopqrstuv",
-				expected: false,
+				expected: { result: false, reason: new TypeError("Invalid URL") },
 			},
-		])(
-			"$caseTitle( $url ) の場合 $expected になる",
-			({ url, expected }) => {
-				expect(validate(url)).toBe(expected);
-			}
-		);
+			{
+				caseTitle: "View IDだけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?v=1234567890abcdefghijklnmopqrstuv",
+				expected: { result: false, reason: new Error("Path is empty") },
+			},
+			{
+				caseTitle: "Peeked Page IDだけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?p=1234567890abcdefghijklnmopqrstuv",
+				expected: { result: false, reason: new Error("Path is empty") },
+			},
+			{
+				caseTitle: "Peeked Mode情報だけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?pm=s",
+				expected: { result: false, reason: new Error("Path is empty") },
+			},
+		])("$caseTitle( $url ) の場合 $expected.reason になる", ({ url, expected }) => {
+			expect(validate(url)).toStrictEqual(expected);
+		});
 	});
 });

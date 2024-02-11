@@ -92,4 +92,103 @@ describe("notion-url", () => {
             expect(nu).toMatchObject(expected);
         });
     });
+
+    describe("異常系（パース失敗）", () => {
+        test.each([
+            {
+                caseTitle: "パスがルートのNotionのURL（サブドメイン無し）の場合",
+                url: "https://notion.so",
+                expectedException: "Path is empty",
+            },
+            {
+                caseTitle: "パスがルートのNotionのURL（サブドメイン無し）の場合",
+                url: "https://workspace.notion.so",
+                expectedException: "Path is empty",
+            },
+            {
+                caseTitle: "Notion以外のURL",
+                url: "https://google.com",
+                expectedException: "Host is not notion.so",
+            },
+            {
+                caseTitle: "URLとして成立しない文字列",
+                url: "https://",
+                expectedException: "Invalid URL",
+            },
+            {
+                caseTitle: "Notion Page IDだけの場合",
+                url: "1234567890abcdefghijklnmopqrstuv",
+                expectedException: "Invalid URL",
+            },
+            {
+                caseTitle: "View IDだけがSearch Paramsに付与されている場合",
+                url: "https://notion.so/?v=1234567890abcdefghijklnmopqrstuv",
+                expected: "Path is empty",
+            },
+            {
+                caseTitle: "Peeked Page IDだけがSearch Paramsに付与されている場合",
+                url: "https://notion.so/?p=1234567890abcdefghijklnmopqrstuv",
+                expected: "Path is empty",
+            },
+            {
+                caseTitle: "Peeked Mode情報だけがSearch Paramsに付与されている場合",
+                url: "https://notion.so/?pm=s",
+                expected: "Path is empty",
+            },
+        ])(
+            "$caseTitle( $url )の場合に、エラーを投げる",
+            ({ url, expectedException }) => {
+                expect(() => new NotionUrl(url)).toThrowError(expectedException);
+            }
+        );
+    });
+
+    describe("異常系（フェイルセーフ）", () => {
+        test.each([
+            {
+                caseTitle: "Workspace IDだけのURL",
+                url: "https://notion.so/workspace/",
+                expected: {
+                    raw: "https://notion.so/workspace/",
+                    rawPageId: "workspace",
+                    pageId: "",
+                    workspaceId: "",
+                    isPeeked: false,
+                    isDatabasePage: false,
+                },
+            },
+            {
+                caseTitle: "想定外のURL Paramsが付与されたURL",
+                url: "https://notion.so/1234567890abcdefghijklnmopqrstuv?foo=bar",
+                expected: {
+                    raw: "https://notion.so/1234567890abcdefghijklnmopqrstuv?foo=bar",
+                    rawPageId: "1234567890abcdefghijklnmopqrstuv",
+                    pageId: "1234567890abcdefghijklnmopqrstuv",
+                    workspaceId: "",
+                    isPeeked: false,
+                    isDatabasePage: false,
+                },
+            },
+            {
+                caseTitle: "Peek Mode情報だけのURL",
+                url: "https://notion.so/1234567890abcdefghijklnmopqrstuv?pm=s",
+                expected: {
+                    raw: "https://notion.so/1234567890abcdefghijklnmopqrstuv?pm=s",
+                    rawPageId: "1234567890abcdefghijklnmopqrstuv",
+                    pageId: "1234567890abcdefghijklnmopqrstuv",
+                    workspaceId: "",
+                    isPeeked: false,
+                    isDatabasePage: false,
+                },
+            },
+
+
+        ])("$caseTitle( $url )を部分的に情報がないNotionUrlとして変換できる", ({ url, expected }) => {
+            const nu = new NotionUrl(url);
+
+            expect(nu).toBeInstanceOf(NotionUrl);
+            expect(nu).toMatchObject(expected);
+        }
+        );
+    });
 });

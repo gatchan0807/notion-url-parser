@@ -104,17 +104,17 @@ describe("parsePath", () => {
 			{
 				caseTitle: "パスがルートのNotionのURL（サブドメイン無し）の場合",
 				url: "https://notion.so",
-				expectedException: "Invalid URL",
+				expectedException: "Path is empty",
 			},
 			{
 				caseTitle: "パスがルートのNotionのURL（サブドメイン無し）の場合",
 				url: "https://workspace.notion.so",
-				expectedException: "Invalid URL",
+				expectedException: "Path is empty",
 			},
 			{
 				caseTitle: "Notion以外のURL",
 				url: "https://google.com",
-				expectedException: "Invalid URL",
+				expectedException: "Host is not notion.so",
 			},
 			{
 				caseTitle: "URLとして成立しない文字列",
@@ -125,6 +125,21 @@ describe("parsePath", () => {
 				caseTitle: "Notion Page IDだけの場合",
 				url: "1234567890abcdefghijklnmopqrstuv",
 				expectedException: "Invalid URL",
+			},
+			{
+				caseTitle: "View IDだけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?v=1234567890abcdefghijklnmopqrstuv",
+				expected: "Path is empty",
+			},
+			{
+				caseTitle: "Peeked Page IDだけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?p=1234567890abcdefghijklnmopqrstuv",
+				expected: "Path is empty",
+			},
+			{
+				caseTitle: "Peeked Mode情報だけがSearch Paramsに付与されている場合",
+				url: "https://notion.so/?pm=s",
+				expected: "Path is empty",
 			},
 		])(
 			"$caseTitle( $url )の場合パース失敗する",
