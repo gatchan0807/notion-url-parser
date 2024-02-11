@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { NotionUrl } from "../notion-url";
 
-describe("notion-url", () => {
+describe("NotionUrl", () => {
     describe("正常系", () => {
         test.each([
             {
@@ -188,6 +188,70 @@ describe("notion-url", () => {
 
             expect(nu).toBeInstanceOf(NotionUrl);
             expect(nu).toMatchObject(expected);
+        }
+        );
+    });
+});
+
+describe("NotionUrl > getFocusedPageId()", () => {
+    describe("正常系", () => {
+        test.each([
+            {
+                url: "https://notion.so/1234567890abcdefghijklnmopqrstuv",
+                expected: "1234567890abcdefghijklnmopqrstuv",
+            },
+            {
+                url: "https://notion.so/workspace/1234567890abcdefghijklnmopqrstuv",
+                expected: "1234567890abcdefghijklnmopqrstuv",
+            },
+            {
+                url: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+                expected: "1234567890abcdefghijklnmopqrstuv",
+            },
+            {
+                url: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?p=abcdefghijklnmopqrstuv1234567890&pm=s",
+                expected: "abcdefghijklnmopqrstuv1234567890",
+            },
+            {
+                url: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?v=abcdefghijklnmopqrstuv1234567890",
+                expected: "abcdefghijklnmopqrstuv1234567890",
+            },
+            {
+                url: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv?v=9876543210abcdefghijklnmopqrstuv&p=abcdefghijklnmopqrstuv1234567890&pm=s",
+                expected: "abcdefghijklnmopqrstuv1234567890",
+            },
+        ])("$url のフォーカス状態のPage IDを取得できる", ({ url, expected }) => {
+            const nu = new NotionUrl(url);
+
+            expect(nu).toBeInstanceOf(NotionUrl);
+            expect(nu.getFocusedPageId()).toBe(expected);
+        });
+    });
+
+    describe("異常系（フェイルセーフ）", () => {
+        test.each([
+            {
+                caseTitle: "Workspace IDだけのURL",
+                url: "https://notion.so/workspace/",
+                expected: "",
+            },
+            {
+                caseTitle: "想定外のURL Paramsが付与されたURL",
+                url: "https://notion.so/1234567890abcdefghijklnmopqrstuv?foo=bar",
+                expected: "1234567890abcdefghijklnmopqrstuv",
+            },
+            {
+                caseTitle: "Peek Mode情報だけのURL",
+                url: "https://notion.so/1234567890abcdefghijklnmopqrstuv?pm=s",
+                expected: "1234567890abcdefghijklnmopqrstuv",
+            },
+
+
+        ])("$caseTitle( $url )のフォーカス状態のPage IDを取得できる", ({ url, expected }) => {
+            const nu = new NotionUrl(url);
+
+            expect(nu).toBeInstanceOf(NotionUrl);
+            expect(nu.getFocusedPageId()).toMatchObject(expected);
         }
         );
     });

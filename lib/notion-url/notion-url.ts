@@ -38,4 +38,19 @@ export class NotionUrl {
             this.peekMode = param.peekMode ?? "";
         }
     }
+
+    /**
+     * 最前面（peek状態の場合はそちら、viewがある場合はそちら）のページのIDを取得します。
+     * 
+     * @returns フォーカス状態のページのID。
+     */
+    public getFocusedPageId(): string | undefined {
+        if (this.isPeeked) {
+            return this.peekPageId;
+        }
+        if (this.isDatabasePage) {
+            return this.viewId;
+        }
+        return this.pageId;
+    }
 }
