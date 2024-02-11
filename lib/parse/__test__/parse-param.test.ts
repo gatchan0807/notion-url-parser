@@ -151,22 +151,22 @@ describe("parseParam", () => {
             {
                 caseTitle: "パスがルートのNotionのURL（サブドメイン無し）",
                 url: "https://notion.so",
-                expectedException: "Invalid URL",
+                expectedException: "Path is empty",
             },
             {
                 caseTitle: "パスがルートのNotionのURL（サブドメイン無し）",
                 url: "https://workspace.notion.so",
-                expectedException: "Invalid URL",
+                expectedException: "Path is empty",
             },
             {
                 caseTitle: "Notion以外のURL",
                 url: "https://google.com",
-                expectedException: "Invalid URL",
+                expectedException: "Host is not notion.so",
             },
             {
                 caseTitle: "Notion以外のURL（Param付き）",
                 url: "https://google.com?query=abcxyz",
-                expectedException: "Invalid URL",
+                expectedException: "Host is not notion.so",
             },
             {
                 caseTitle: "URLとして成立しない文字列",

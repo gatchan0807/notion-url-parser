@@ -10,8 +10,11 @@ import { validate } from "../validation/validation";
  * @throws URLが無効な場合はエラーが throw されます。
  */
 export const parseParam: parseParamFunction = (rawUrl: string) => {
-    if (!validate(rawUrl)) {
-        throw new Error("Invalid URL");
+    const valid = validate(rawUrl);
+    if (!valid.result && valid.reason !== null) {
+        throw valid.reason;
+    } else if (!valid.result) {
+        throw new Error("Something went wrong in Notion URL Parser");
     }
 
     const url = new URL(rawUrl);
