@@ -92,4 +92,39 @@ describe("notion-url", () => {
             expect(nu).toMatchObject(expected);
         });
     });
+
+    describe("異常系（パース失敗）", () => {
+        test.each([
+            {
+                caseTitle: "パスがルートのNotionのURL（サブドメイン無し）の場合",
+                url: "https://notion.so",
+                expectedException: "Path is empty",
+            },
+            {
+                caseTitle: "パスがルートのNotionのURL（サブドメイン無し）の場合",
+                url: "https://workspace.notion.so",
+                expectedException: "Path is empty",
+            },
+            {
+                caseTitle: "Notion以外のURL",
+                url: "https://google.com",
+                expectedException: "Host is not notion.so",
+            },
+            {
+                caseTitle: "URLとして成立しない文字列",
+                url: "https://",
+                expectedException: "Invalid URL",
+            },
+            {
+                caseTitle: "Notion Page IDだけの場合",
+                url: "1234567890abcdefghijklnmopqrstuv",
+                expectedException: "Invalid URL",
+            },
+        ])(
+            "$caseTitle( $url )の場合に、エラーを投げる",
+            ({ url, expectedException }) => {
+                expect(() => new NotionUrl(url)).toThrowError(expectedException);
+            }
+        );
+    });
 });
