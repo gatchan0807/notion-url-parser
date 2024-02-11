@@ -30,4 +30,4 @@ export type ParsedFromPath = Pick<
 
 export type parseParam = (rawUrl: string) => ParsedFromParam;
 export type parsePath = (rawUrl: string) => ParsedFromPath;
-export type validate = (rawUrl: string) => boolean;
+export type validate = (rawUrl: string) => { result: boolean, reason: Error | null };
