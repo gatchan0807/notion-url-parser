@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "author": "gatchan0807 <yuki.dolphin.koga@gmail.com>",
   "devDependencies": {
+    "@types/node": "^20.11.17",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vitest": "^1.1.1"
@@ -27,5 +28,8 @@
     "test": "vitest"
   },
   "type": "module",
-  "license": "MIT"
+  "license": "MIT",
+  "volta": {
+    "node": "20.11.0"
+  }
 }
