@@ -256,3 +256,40 @@ describe("NotionUrl > getFocusedPageId()", () => {
         );
     });
 });
+
+describe("NotionUrl > getFocusedPageHashedId()", () => {
+    describe("正常系", () => {
+        test.each([
+            {
+                url: "https://notion.so/1234567890abcdefghijklnmopqrstuv",
+                expected: "8cc7e3c7413d4fbc14f12afe8816d4a009c5e6c57a7ab87d64b35450d6c3f552",
+            },
+            {
+                url: "https://notion.so/alphabet-in-page-title-1234567890abcdefghijklnmopqrstuv",
+                expected: "8cc7e3c7413d4fbc14f12afe8816d4a009c5e6c57a7ab87d64b35450d6c3f552",
+            },
+            {
+                url: "https://notion.so/abcdefghijklnmopqrstuv1234567890?v=1234567890abcdefghijklnmopqrstuv",
+                expected: "8cc7e3c7413d4fbc14f12afe8816d4a009c5e6c57a7ab87d64b35450d6c3f552",
+            },
+            {
+                url: "https://notion.so/abcdefghijklnmopqrstuv1234567890?p=1234567890abcdefghijklnmopqrstuv&pm=s",
+                expected: "8cc7e3c7413d4fbc14f12afe8816d4a009c5e6c57a7ab87d64b35450d6c3f552",
+            },
+            {
+                url: "https://notion.so/abcdefghijklnmopqrstuv1234567890?v=9876543210abcdefghijklnmopqrstuv&p=1234567890abcdefghijklnmopqrstuv&pm=s",
+                expected: "8cc7e3c7413d4fbc14f12afe8816d4a009c5e6c57a7ab87d64b35450d6c3f552",
+            },
+            // 以下はフォーカスされているIDが異なるパターン
+            {
+                url: "https://notion.so/abcdefghijklnmopqrstuv1234567890",
+                expected: "c6a04e49d32473aa4a425f42ac4236ff2e229b5089d735291e2f57bb229d12a9",
+            },
+        ])("$url のフォーカス状態のPage IDからハッシュ値を求めることができる", async ({ url, expected }) => {
+            const nu = new NotionUrl(url);
+
+            expect(nu).toBeInstanceOf(NotionUrl);
+            expect(nu.getFocusedPageHashedId()).resolves.toBe(expected)
+        });
+    });
+});

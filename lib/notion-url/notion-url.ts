@@ -1,3 +1,4 @@
+import { digest } from "../hash/hash";
 import { parseParam } from "../parse/parse-param";
 import { parsePath } from "../parse/parse-path";
 
@@ -52,5 +53,15 @@ export class NotionUrl {
             return this.viewId;
         }
         return this.pageId;
+    }
+
+    /**
+     * 最前面（peek状態の場合はそちら、viewがある場合はそちら）のページのIDからハッシュ値を生成します
+     * 
+     * @returns 生成されたハッシュ値
+     */
+    public async getFocusedPageHashedId(): Promise<string> {
+        const pageId = this.getFocusedPageId() ?? ""
+        return await digest(pageId) ?? "";
     }
 }
